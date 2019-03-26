@@ -30,6 +30,10 @@ in your GitLab Runner's
 |--------|----------|-----|
 | `us-east-2` | Linux | `ami-0b316c366679a59d7` |
 
+```shell
+$ aws ec2 describe-images --image-ids ami-0b316c366679a59d7
+```
+
 
 ## Architecture
 
