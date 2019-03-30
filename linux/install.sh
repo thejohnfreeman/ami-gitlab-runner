@@ -2,11 +2,14 @@
 
 # Install GitLab Runner, Docker, and Docker Machine on Ubuntu.
 
+set -o xtrace
 set -o nounset
 set -o pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
+# There seems to be no way to gracefully stop unattended upgrades, or to wait
+# for them to finish, so we just try to disable them and kill them with fire.
 # https://askubuntu.com/questions/15433/unable-to-lock-the-administration-directory-var-lib-dpkg-is-another-process/15469
 # https://linuxconfig.org/disable-automatic-updates-on-ubuntu-18-04-bionic-beaver-linux
 
@@ -47,8 +50,7 @@ base=https://github.com/docker/machine/releases/download/v0.16.0
 curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
+systemctl status gitlab-runner
 gitlab-runner --version
-docker --version
-docker version
-# sleep 2
-# docker-machine --version
+sudo docker version
+docker-machine version

@@ -10,6 +10,8 @@
     "source_ami": "ami-f4f4cf91",
     "ssh_username": "ubuntu",
     "ami_name": "ami-gitlab-runner-linux-{{ user `version` }}-{{ user `build` }}",
+    "force_deregister": true,
+    "force_delete_snapshot": true,
     "ami_groups": ["all"]
   }],
   "provisioners": [

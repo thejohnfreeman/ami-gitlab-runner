@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Pretty-print tags for the AMI.
+# Print a command to add tags to the AMI.
+# Packer does not let us compute the tags for an AMI.
+
 tags='Key=type,Value=gitlab-runner'
 tags+=' Key=platform,Value=linux'
 tags+=" Key=version,Value=${TAG_VERSION}"
