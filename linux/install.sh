@@ -2,9 +2,31 @@
 
 # Install GitLab Runner, Docker, and Docker Machine on Ubuntu.
 
-set -o errexit
 set -o nounset
 set -o pipefail
+
+export DEBIAN_FRONTEND=noninteractive
+
+# https://askubuntu.com/questions/15433/unable-to-lock-the-administration-directory-var-lib-dpkg-is-another-process/15469
+# https://linuxconfig.org/disable-automatic-updates-on-ubuntu-18-04-bionic-beaver-linux
+
+sudo systemctl stop apt-daily-upgrade.timer
+sudo systemctl stop apt-daily.timer
+sudo sed --in-place \
+  --expression '/APT::Periodic::Update-Package-Lists/ s/1/0/' \
+  --expression '/APT::Periodic::Unattended-Upgrade/ s/1/0/' \
+  /etc/apt/apt.conf.d/20auto-upgrades
+
+sudo killall apt.systemd.daily
+sudo killall apt-get
+sudo killall update-manager
+
+while pid=$(sudo fuser /var/lib/apt/lists/lock 2>/dev/null); do
+  tail --pid=${pid} --follow /dev/null 2>/dev/null
+  sleep 2
+done
+
+set -o errexit
 
 sudo apt-get --yes update
 sudo apt-get --yes install \
@@ -27,4 +49,6 @@ sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
 gitlab-runner --version
 docker --version
-docker-machine --version
+docker version
+# sleep 2
+# docker-machine --version
