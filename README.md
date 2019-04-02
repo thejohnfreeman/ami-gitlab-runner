@@ -37,17 +37,13 @@ $ aws ec2 describe-images --image-ids ami-0b316c366679a59d7
 
 ## Architecture
 
-- [Makefile](./Makefile): Builds and tests an AMI.
-- [install.sh](./install.sh): Installs the dependencies. Assumes an Ubuntu
-    environment.
-- [versions.sh](./versions.sh): Prints the versions of dependencies installed.
-    For now, these are included in the description of the AMI.
+Each directory, [`linux`](./linux) and [`windows`](./windows), has
+a [Packer](https://www.packer.io/) template for that platform and a Makefile
+for building the image. Each pulls a version number from the
+[`version` file](./version) in this directory.
 
 
 ## TODO
 
-- Use semantic versioning for AMIs.
-- Tag AMIs with their version.
-- Tag AMIs with the versions of the dependencies installed.
 - Build AMIs for more regions.
 - Build and publish AMIs within a continuous deployment pipeline.
