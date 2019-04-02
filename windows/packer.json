@@ -1,0 +1,27 @@
+{
+  "variables": {
+    "version": null,
+    "build": null
+  },
+  "builders": [{
+    "force_deregister": true,
+    "force_delete_snapshot": true,
+    "type": "amazon-ebs",
+    "region": "us-east-2",
+    "instance_type": "t2.micro",
+    "source_ami": "ami-016701e4375aed079",
+    "user_data_file": "bootstrap.txt",
+    "associate_public_ip_address": true,
+    "communicator": "ssh",
+    "ssh_username": "Administrator",
+    "ssh_timeout": "20m",
+    "ami_name": "ami-gitlab-runner-windows-{{ user `version` }}-{{ user `build` }}",
+    "ami_groups": ["all"]
+  }],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "script": "configure.ps1"
+    }
+  ]
+}
