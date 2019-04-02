@@ -15,6 +15,19 @@ available](https://docs.aws.amazon.com/cli/latest/reference/ec2/get-password-dat
 up to 15 minutes. This is just an unfortunate consequence of [deploying
 a service (SSH) on
 Windows](https://stackoverflow.com/questions/5080445/why-does-azure-deployment-take-so-long)
-it seems. Docker Machine is smart enough to wait for "SSH to be available",
-but it takes so long that Docker Machine times out (it tries 60 times, which
-does not appear to be configurable).
+it seems.
+
+Docker Machine is smart enough to wait for "SSH to be available", but it runs
+into an error which I have not yet solved:
+
+```
+Error creating machine: Error detecting OS: Error getting SSH command: ssh command error:
+command : cat /etc/os-release
+err     : exit status 1
+output  : cat : Cannot find path 'C:\etc\os-release' because it does not exist.
+At line:1 char:1
++ cat /etc/os-release
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\etc\os-release:String) [Get-Content], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+```
