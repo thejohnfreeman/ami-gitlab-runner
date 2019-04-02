@@ -74,22 +74,30 @@ address = $(shell cat address)
 
 # The grep is to remove blank lines.
 password : instance
-	aws ec2 get-password-data \
-		--instance-id ${instance_id} \
-		--priv-launch-key key \
-		--query 'PasswordData' \
-		--output text \
-		| grep '\S' \
-		| tee $@.tmp
-	if [ -n "$$(cat $@.tmp)" ]; then mv $@.tmp $@; else rm $@.tmp; fi
+	while true; do \
+		aws ec2 get-password-data \
+			--instance-id ${instance_id} \
+			--priv-launch-key key \
+			--query 'PasswordData' \
+			--output text \
+			| grep '\S' \
+			| tee $@.tmp; \
+		if [ -n "$$(cat $@.tmp)" ]; then \
+			mv $@.tmp $@; \
+			break; \
+		else \
+			rm $@.tmp; \
+			sleep 1; \
+		fi \
+	done
 
-ssh := ssh \
-  -o UserKnownHostsFile=/dev/null \
-  -o StrictHostKeyChecking=no \
-  -i key
-
-ssh : address key running
-	${ssh} ${ssh_user}@${address}
+ssh : address key running password
+	ssh \
+		-o UserKnownHostsFile=/dev/null \
+		-o StrictHostKeyChecking=no \
+		-o PasswordAuthentication=no \
+		-i key \
+		${ssh_user}@${address}
 
 test : ssh
 
