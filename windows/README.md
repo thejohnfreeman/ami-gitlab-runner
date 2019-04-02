@@ -18,7 +18,12 @@ Windows](https://stackoverflow.com/questions/5080445/why-does-azure-deployment-t
 it seems.
 
 Docker Machine is smart enough to wait for "SSH to be available", but it runs
-into an error which I have not yet solved:
+runs into an error when Docker Machine tries to
+[provision](https://docs.docker.com/machine/reference/provision/) it. There is
+an [open issue](https://github.com/docker/machine/issues/2907) in the Docker
+Machine project for provisioning Windows machines. They had not started
+working on it because there was no easy way out-of-the-box for connecting to
+a Windows machine. Now that we have SSH, I'm hoping they'll reconsider it.
 
 ```
 Error creating machine: Error detecting OS: Error getting SSH command: ssh command error:
