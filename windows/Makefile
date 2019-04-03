@@ -43,13 +43,11 @@ key : id
 		> $@.tmp
 	mv $@.tmp $@
 
-# --instance-market-options '{"MarketType": "spot"}'
 instance : key
 	aws ec2 run-instances \
 		--count 1 \
 		--image-id ${image_id} \
 		--instance-type t2.micro \
-		--security-groups gitlab-runners \
 		--key-name ${id}-key \
 		--query 'Instances[0].InstanceId' \
 		--output text \
