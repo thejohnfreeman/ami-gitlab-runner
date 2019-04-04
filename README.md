@@ -20,7 +20,7 @@ need an AMI for the instances that Docker Machine launches. The
 16.04. Docker Machine will install Docker on those instances after they
 launch, [unless they already have Docker
 installed](https://docs.docker.com/machine/reference/provision/), in which
-case you'll save some time. Thus, it makes sense to use these one of these
+case you'll save some time. Thus, it makes sense to use one of these
 images for the
 [`amazonec2-ami`](https://docs.docker.com/machine/drivers/aws/#options) option
 in your GitLab Runner's
