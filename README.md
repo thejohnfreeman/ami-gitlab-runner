@@ -18,9 +18,10 @@ Once you register a GitLab Runner with the `docker+machine` executor, it will
 need an AMI for the instances that Docker Machine launches. The
 [default](https://docs.docker.com/machine/drivers/aws/#default-amis) is Ubuntu
 16.04. Docker Machine will install Docker on those instances after they
-launch, but if they already have Docker installed from their image, then
-you'll save some time during initialization. Thus, it makes sense to use these
-one of these images for the
+launch, [unless they already have Docker
+installed](https://docs.docker.com/machine/reference/provision/), in which
+case you'll save some time. Thus, it makes sense to use these one of these
+images for the
 [`amazonec2-ami`](https://docs.docker.com/machine/drivers/aws/#options) option
 in your GitLab Runner's
 [`MachineOptions`](https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runnersmachine-section)
